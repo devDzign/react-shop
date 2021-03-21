@@ -1,6 +1,6 @@
 import React from 'react';
 import './header.styles.scss'
-import {Link} from "react-router-dom";
+import {Link, NavLink, useHistory} from "react-router-dom";
 import {ReactComponent as Logo} from '../../assets/crown.svg'
 
 const ROUTES_PATH = [
@@ -11,10 +11,21 @@ const ROUTES_PATH = [
     {
         'name': 'shop',
         'path': '/shop'
+    },
+    {
+        'name': 'login',
+        'path': '/login'
+    },
+    {
+        'name': 'register',
+        'path': '/register'
     }
 ]
 
 const Header = (props) => {
+
+    const history = useHistory();
+
 
     // const renderAuthenticationLink = isLoggedIn
     //     ?
@@ -22,6 +33,8 @@ const Header = (props) => {
     //     :
     //         <Link to={"sign-in-and-sign-up"} className="nav-link">Sign In</Link>
     //     ;
+
+
 
     return (
         <div className='header'>
@@ -31,7 +44,7 @@ const Header = (props) => {
             <div className="options">
                 {
                     ROUTES_PATH.map((route, key) => {
-                        return <Link to={route.path} key={key} className='option'>{route.name.toUpperCase()}</Link>
+                        return <NavLink  exact activeClassName='active' to={route.path} key={key} className='option'>{route.name.toUpperCase()}</NavLink>
                     })
                 }
             </div>
