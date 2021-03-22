@@ -1,4 +1,5 @@
 import { UserActionTypes } from "./user.types";
+import SecurityApi from "../../api/security.api";
 
 
 export const setAuthentication = (isLoggedIn, user) => {
@@ -8,6 +9,20 @@ export const setAuthentication = (isLoggedIn, user) => {
             isLoggedIn: isLoggedIn,
             user: user
         }
+    }
+}
+
+/**
+ *
+ * @param history
+ * @returns {function(*): Promise<void>}
+ */
+export const userLogout = (history) => {
+
+    return async (dispatch) => {
+        await dispatch(setAuthentication(false, null))
+        await SecurityApi.logout();
+        await history.push("/sign-in-and-sign-up");
     }
 }
 
@@ -26,11 +41,22 @@ export const loginReceive = () => ({
     type: UserActionTypes.LOGIN_RECEIVED
 })
 
+export const signInUserAction = ({email, password}, history) => ({
+    type: UserActionTypes.LOGIN_REDUX_SAGA_START,
+    payload: {
+        credential: {email, password},
+        history
+    }
+})
+
 export const isAuthenticatedUser = () => {
     return async (dispatch) => {
-        // fait ce que tu veux ici
-
-        dispatch(setAuthentication(true, {name: 'mourad', age: 33}))
-
+        const isAuthenticated = await SecurityApi.isAuthenticated()
+        let currentUser =  null;
+        if(isAuthenticated) {
+            const {user} =  await SecurityApi.getTokenDecode();
+            currentUser =  user;
+        }
+        dispatch(setAuthentication(isAuthenticated,currentUser))
     }
 }

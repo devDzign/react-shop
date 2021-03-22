@@ -2,6 +2,9 @@ import React from 'react';
 import './header.styles.scss'
 import {Link, NavLink, useHistory} from "react-router-dom";
 import {ReactComponent as Logo} from '../../assets/crown.svg'
+import {connect} from "react-redux";
+import {userLogout} from "../../redux/users/user.actions";
+import {toast} from "react-toastify";
 
 const ROUTES_PATH = [
     {
@@ -12,28 +15,28 @@ const ROUTES_PATH = [
         'name': 'shop',
         'path': '/shop'
     },
-    {
-        'name': 'login',
-        'path': '/login'
-    },
-    {
-        'name': 'register',
-        'path': '/register'
-    }
 ]
 
-const Header = (props) => {
+const Header = ({isLoggedIn, signOutUser}) => {
+    let history = useHistory();
 
-    const history = useHistory();
+    const logoutHandle = () => {
 
+        signOutUser(history);
+        history.push('/')
+        toast.success('Bye bye')
+    }
 
-    // const renderAuthenticationLink = isLoggedIn
-    //     ?
-    //         <Link to={"/sign-out"} className="nav-link">Sign Out</Link>
-    //     :
-    //         <Link to={"sign-in-and-sign-up"} className="nav-link">Sign In</Link>
-    //     ;
-
+    const renderAuthenticationLink = isLoggedIn
+        ?
+        <a  href="#" onClick={logoutHandle} className="nav-link option">
+            Sign Out
+        </a>
+        :
+        <NavLink exact activeClassName='active' to={"sign-in-and-sign-up"} className="nav-link option">
+            Sign In
+        </NavLink>
+    ;
 
 
     return (
@@ -47,10 +50,21 @@ const Header = (props) => {
                         return <NavLink  exact activeClassName='active' to={route.path} key={key} className='option'>{route.name.toUpperCase()}</NavLink>
                     })
                 }
+                {renderAuthenticationLink}
             </div>
         </div>
     );
 };
 
+const mapStateToProps = state => {
+    return {
+        isLoggedIn: state.authenticate.isLoggedIn
+    }
+}
 
-export default Header;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signOutUser: (history) => dispatch(userLogout(history)),
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

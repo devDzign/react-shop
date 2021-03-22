@@ -1,12 +1,15 @@
 import React from 'react';
+import './sign-in-and-sign-up.styles.scss'
+import {SignInForm, SignUp} from "../../components";
 
-const SignInSignUpPage = () => {
+
+const SignInAndSignUpPage = () => {
     return (
-        <div>
-           <p>Login</p>
-           <p>Sign up</p>
+        <div className='sign-in-and-sign-up'>
+          <SignInForm/>
+          <SignUp />
         </div>
     );
 };
 
-export default SignInSignUpPage;
+export default SignInAndSignUpPage;

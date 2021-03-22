@@ -1,10 +1,11 @@
 import { UserActionTypes } from "./user.types";
+import SecurityApi from "../../api/security.api";
 
 const INITIAL_STATE = {
-    isLoggedIn:   false,
+    isLoggedIn:   true,
+    user: SecurityApi.getCurrentUser(),
     isFetching: false,
-    errors: null,
-    user: null
+    errors: null
 }
 
 const userReducer = (state = INITIAL_STATE, action) => {

@@ -1,23 +1,28 @@
 import React, {useEffect} from 'react';
-
-// redux
-import {connect} from "react-redux";
-
 // CSS
 import './App.css';
 import 'bootstrap/scss/bootstrap.scss'
-
+// redux
+import {connect} from "react-redux";
+// Actions Redux
+import { isAuthenticatedUser } from "./redux/users/user.actions";
 // Router
 import { Redirect, Route, Switch } from "react-router-dom";
+// HOC
+import {RequireAutehentication} from "./hoc";
+//Components
+import {Header} from "./components";
+// PAGES
+import {HomePage, ShopPage, SignInAndSignUpPage} from "./pages";
 
-// Pages
-import HomePage from "./pages/home/homepage.component";
-import ShopPage from "./pages/shop/shop.page";
-import Header from "./components/header/header.component";
-import { isAuthenticatedUser } from "./redux/users/user.actions";
-import SignInSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.page";
-
-function App({isLoggedIn, isAuthenticated}) {
+/**
+ *
+ * @param isLoggedIn
+ * @param isAuthenticated
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const App = ({isLoggedIn, isAuthenticated}) => {
 
     useEffect(() => {
         isAuthenticated();
@@ -28,7 +33,7 @@ function App({isLoggedIn, isAuthenticated}) {
         <Header/>
         <Switch>
             <Route exact path="/" component={HomePage}/>
-            <Route exact path="/shop" component={ShopPage}/>
+            <Route exact path="/shop" component={RequireAutehentication(ShopPage)}/>
             <Route
                 exact
                 path="/sign-in-and-sign-up"
@@ -36,7 +41,7 @@ function App({isLoggedIn, isAuthenticated}) {
                     isLoggedIn ? (
                         <Redirect to='/' />
                     ) : (
-                        <SignInSignUpPage />
+                        <SignInAndSignUpPage />
                     )
                 }
             />
