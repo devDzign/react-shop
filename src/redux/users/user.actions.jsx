@@ -1,5 +1,7 @@
 import { UserActionTypes } from "./user.types";
 import SecurityApi from "../../api/security.api";
+import {toast} from "react-toastify";
+import {registrationError} from "../registration/registration.actions";
 
 
 export const setAuthentication = (isLoggedIn, user) => {
@@ -20,8 +22,8 @@ export const setAuthentication = (isLoggedIn, user) => {
 export const userLogout = (history) => {
 
     return async (dispatch) => {
-        await dispatch(setAuthentication(false, null))
         await SecurityApi.logout();
+        await dispatch(setAuthentication(false, null))
         await history.push("/sign-in-and-sign-up");
     }
 }
@@ -58,5 +60,28 @@ export const isAuthenticatedUser = () => {
             currentUser =  user;
         }
         dispatch(setAuthentication(isAuthenticated,currentUser))
+    }
+}
+
+
+
+export const loginStart = (credentials, history) => {
+    return async (dispatch) => {
+        try {
+            await dispatch(loginRequest());
+            const response = await SecurityApi.loginUserAPI(credentials);
+            await dispatch(loginReceive())
+            await dispatch ( setAuthentication( true, response.user ) );
+            await history.push( "/shop" );
+            toast.info('Welcome to the site')
+        } catch (error) {
+            if (error.response && error.response.status === 400) {
+                dispatch(registrationError(error.response.data))
+            } else {
+                dispatch(registrationError(null))
+            }
+        }
+
+
     }
 }

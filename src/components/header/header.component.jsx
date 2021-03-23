@@ -20,9 +20,8 @@ const ROUTES_PATH = [
 const Header = ({isLoggedIn, signOutUser}) => {
     let history = useHistory();
 
-    const logoutHandle = () => {
-
-        signOutUser(history);
+    const logoutHandle = async () => {
+        await signOutUser(history);
         history.push('/')
         toast.success('Bye bye')
     }

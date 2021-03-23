@@ -4,10 +4,11 @@ import FormInput from "../../ui/form/form-input/form-input.component";
 import CustomButton from "../../ui/form/custom-button/custom-button.componnents";
 import {connect} from "react-redux";
 import { useHistory } from "react-router-dom";
+import {loginStart} from "../../../redux/users/user.actions";
 
 
 
-const SignInForm = () => {
+const SignInForm = ({signInUserAction}) => {
     const [credential, setCredential] = useState({
         email: "",
         password: ""
@@ -17,7 +18,7 @@ const SignInForm = () => {
 
     const handleSubmit =  async (event) => {
         event.preventDefault()
-        console.log(credential, history);
+        signInUserAction(credential, history);
     }
 
     const handleChange = (event) => {
@@ -59,5 +60,10 @@ const SignInForm = () => {
 
 
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signInUserAction: (credential, history) => dispatch(loginStart(credential, history)),
+    }
+}
 
-export default connect(null, null)(SignInForm);
+export default connect(null, mapDispatchToProps)(SignInForm);

@@ -4,9 +4,9 @@ import FormInput from "../../ui/form/form-input/form-input.component";
 import CustomButton from "../../ui/form/custom-button/custom-button.componnents";
 import { connect } from "react-redux";
 import {useHistory} from "react-router-dom";
+import {registrationStart} from "../../../redux/registration/registration.actions";
 
-
-const SignUp = () => {
+const SignUp = ({signUpUser}) => {
     const [newUser, setNewUser] = useState({
         displayName: "",
         email: "",
@@ -16,7 +16,7 @@ const SignUp = () => {
     let history = useHistory();
     const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log(newUser, history)
+        signUpUser(newUser, history)
     }
 
     const handleChange = (event) => {
@@ -76,6 +76,10 @@ const SignUp = () => {
 };
 
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signUpUser: (newUser, history) => dispatch(registrationStart(newUser, history)),
+    }
+}
 
-
-export default connect(null, null)(SignUp);
+export default connect(null, mapDispatchToProps)(SignUp);
