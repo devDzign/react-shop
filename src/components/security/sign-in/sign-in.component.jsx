@@ -8,7 +8,7 @@ import {loginStart} from "../../../redux/users/user.actions";
 
 
 
-const SignInForm = ({signInUserAction}) => {
+const SignInForm = ({signInUserAction, errors}) => {
     const [credential, setCredential] = useState({
         email: "",
         password: ""
@@ -35,6 +35,7 @@ const SignInForm = ({signInUserAction}) => {
                 <FormInput
                     type="email"
                     name="email"
+                    error= {errors}
                     value={credential.email}
                     handleChange={handleChange}
                     required
@@ -58,12 +59,16 @@ const SignInForm = ({signInUserAction}) => {
     );
 };
 
-
-
 const mapDispatchToProps = (dispatch) => {
     return {
         signInUserAction: (credential, history) => dispatch(loginStart(credential, history)),
     }
 }
 
-export default connect(null, mapDispatchToProps)(SignInForm);
+const mapStateToProps = state => {
+    return {
+        errors: state.authenticate.errors,
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);

@@ -7,6 +7,8 @@ import {connect} from "react-redux";
 
 const SignInAndSignUpPage = ({isFetchingLogin,isFetchingRegister}) => {
 
+
+
     if (isFetchingRegister || isFetchingLogin) {
         return (
             <div className='sign-in-and-sign-up'>

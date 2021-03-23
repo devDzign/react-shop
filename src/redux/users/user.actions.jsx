@@ -75,10 +75,10 @@ export const loginStart = (credentials, history) => {
             await history.push( "/shop" );
             toast.info('Welcome to the site')
         } catch (error) {
-            if (error.response && error.response.status === 400) {
-                dispatch(registrationError(error.response.data))
+            if (error.response && (error.response.status === 400 || error.response.status === 401)) {
+                dispatch(loginError(error.response.data))
             } else {
-                dispatch(registrationError(null))
+                dispatch(loginError(null))
             }
         }
 

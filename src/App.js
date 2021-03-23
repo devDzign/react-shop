@@ -2,6 +2,10 @@ import React, {useEffect} from 'react';
 // CSS
 import './App.css';
 import 'bootstrap/scss/bootstrap.scss'
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // redux
 import {connect} from "react-redux";
 // Actions Redux
@@ -31,6 +35,7 @@ const App = ({isLoggedIn, isAuthenticated}) => {
   return (
     <>
         <Header/>
+        <ToastContainer position={toast.POSITION.TOP_LEFT} />
         <Switch>
             <Route exact path="/" component={HomePage}/>
             <Route exact path="/shop" component={RequireAutehentication(ShopPage)}/>

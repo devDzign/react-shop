@@ -1,18 +1,36 @@
-import React, { useState } from 'react';
+import React, {useState,useEffect} from 'react';
 import './sign-up.styles.scss'
 import FormInput from "../../ui/form/form-input/form-input.component";
 import CustomButton from "../../ui/form/custom-button/custom-button.componnents";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {registrationStart} from "../../../redux/registration/registration.actions";
 
-const SignUp = ({signUpUser}) => {
+const SignUp = ({signUpUser, errorsData}) => {
     const [newUser, setNewUser] = useState({
         displayName: "",
         email: "",
         password: "",
         confirmPassword: ""
     })
+
+    const [errors, setErrors] = useState({
+        displayName: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+    });
+
+
+    useEffect(() => {
+        if (errorsData) {
+            errorsData.forEach(violation => {
+                setErrors(prevState => ({...prevState, [violation.propertyPath]: violation.message}));
+            });
+        }
+    }, [errorsData]);
+
+
     let history = useHistory();
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -35,6 +53,7 @@ const SignUp = ({signUpUser}) => {
                     name="displayName"
                     value={newUser.displayName}
                     handleChange={handleChange}
+                    error={errors.displayName}
                 >
                     Display Name
                 </FormInput>
@@ -44,6 +63,7 @@ const SignUp = ({signUpUser}) => {
                     name="email"
                     value={newUser.email}
                     handleChange={handleChange}
+                    error={errors.email}
                     required
                 >
                     Email
@@ -54,6 +74,7 @@ const SignUp = ({signUpUser}) => {
                     name="password"
                     value={newUser.password}
                     onChange={handleChange}
+                    error={errors.password}
                     required
                 >
                     Password
@@ -63,6 +84,7 @@ const SignUp = ({signUpUser}) => {
                     type="password"
                     name="confirmPassword"
                     value={newUser.confirmPassword}
+                    error={errors.confirmPassword}
                     onChange={handleChange}
                     required
                 >
@@ -82,4 +104,10 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(SignUp);
+const mapStateToProps = state => {
+    return {
+        errorsData: state.registration.errors,
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
