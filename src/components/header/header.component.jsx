@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react';
+import React from 'react';
 import './header.styles.scss'
 import {Link, NavLink, useHistory} from "react-router-dom";
 import {ReactComponent as Logo} from '../../assets/crown.svg'
@@ -20,7 +20,7 @@ const ROUTES_PATH = [
     },
 ]
 
-const Header = ({isLoggedIn, signOutUser, totalItems, hiddenCart, toggleCart}) => {
+const Header = ({isLoggedIn, signOutUser, totalItems, hiddenCart, toggleCart, cartItems}) => {
     let history = useHistory();
 
     const logoutHandle = async () => {
@@ -58,7 +58,7 @@ const Header = ({isLoggedIn, signOutUser, totalItems, hiddenCart, toggleCart}) =
                 {renderAuthenticationLink}
                 <CartIcon totalItems={totalItems} handleClick={handleClickShowCart}/>
             </div>
-            { !hiddenCart && <CartDropdown/>}
+            { !hiddenCart && <CartDropdown cartItems={cartItems}/>}
 
         </div>
     );

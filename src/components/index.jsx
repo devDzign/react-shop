@@ -9,8 +9,10 @@ import SignInForm from "./security/sign-in/sign-in.component";
 import Loading from "./ui/loading/loading.component";
 import CartIcon from "./cart-icon/cart-icon.component";
 import CustomButton from "./ui/form/custom-button/custom-button.componnents";
+import CartItem from "./cart-item/cart-item.component";
 
 export {
+    CartItem,
     CustomButton,
     CartIcon,
     Header,

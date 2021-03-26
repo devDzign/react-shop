@@ -1,11 +1,14 @@
 import React from 'react';
 import './cart-dropdown.styles.scss'
-import {CustomButton} from "../index";
+import {CartItem, CustomButton} from "../index";
 
-const CartDropdown = () => {
+const CartDropdown = ({cartItems}) => {
     return (
         <div className='cart-dropdown'>
-            <div className='cart-icon'>
+            <div className='cart-items'>
+                {cartItems.map(cartItem => (
+                    <CartItem key={cartItem.id} item={cartItem} />
+                ))}
             </div>
             <CustomButton>Checkout</CustomButton>
 
