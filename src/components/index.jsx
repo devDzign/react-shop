@@ -7,5 +7,19 @@ import SignUp from "./security/sign-up/sign-up.component";
 import SignOut from "./security/sign-out/sign-out.component";
 import SignInForm from "./security/sign-in/sign-in.component";
 import Loading from "./ui/loading/loading.component";
+import CartIcon from "./cart-icon/cart-icon.component";
+import CustomButton from "./ui/form/custom-button/custom-button.componnents";
 
-export { Header, CollectionPreview, DirectoryMenu, MenuItem, ItemCollection, SignInForm, SignOut, SignUp, Loading };
+export {
+    CustomButton,
+    CartIcon,
+    Header,
+    CollectionPreview,
+    DirectoryMenu,
+    MenuItem,
+    ItemCollection,
+    SignInForm,
+    SignOut,
+    SignUp,
+    Loading
+};

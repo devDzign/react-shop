@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import './header.styles.scss'
 import {Link, NavLink, useHistory} from "react-router-dom";
 import {ReactComponent as Logo} from '../../assets/crown.svg'
 import {connect} from "react-redux";
 import {userLogout} from "../../redux/users/user.actions";
 import {toast} from "react-toastify";
+import {CartIcon} from "../index";
+import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+import {toggleCartHiddenOrSHow} from "../../redux/cart/cart.actions";
 
 const ROUTES_PATH = [
     {
@@ -17,7 +20,7 @@ const ROUTES_PATH = [
     },
 ]
 
-const Header = ({isLoggedIn, signOutUser}) => {
+const Header = ({isLoggedIn, signOutUser, totalItems, hiddenCart, toggleCart}) => {
     let history = useHistory();
 
     const logoutHandle = async () => {
@@ -37,6 +40,9 @@ const Header = ({isLoggedIn, signOutUser}) => {
         </NavLink>
     ;
 
+    const handleClickShowCart = () => {
+        toggleCart();
+    }
 
     return (
         <div className='header'>
@@ -50,20 +56,26 @@ const Header = ({isLoggedIn, signOutUser}) => {
                     })
                 }
                 {renderAuthenticationLink}
+                <CartIcon totalItems={totalItems} handleClick={handleClickShowCart}/>
             </div>
+            { !hiddenCart && <CartDropdown/>}
+
         </div>
     );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = ({authenticate: {isLoggedIn}, cart: {totalItems, hidden}}) => {
     return {
-        isLoggedIn: state.authenticate.isLoggedIn
+        isLoggedIn,
+        totalItems,
+        hiddenCart: hidden
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         signOutUser: (history) => dispatch(userLogout(history)),
+        toggleCart: () => dispatch(toggleCartHiddenOrSHow())
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
