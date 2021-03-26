@@ -64,10 +64,11 @@ const Header = ({isLoggedIn, signOutUser, totalItems, hiddenCart, toggleCart}) =
     );
 };
 
-const mapStateToProps = ({authenticate: {isLoggedIn}, cart: {totalItems, hidden}}) => {
+const mapStateToProps = ({authenticate: {isLoggedIn}, cart: {hidden, cartItems}}) => {
     return {
         isLoggedIn,
-        totalItems,
+        cartItems,
+        totalItems: cartItems.length,
         hiddenCart: hidden
     }
 }

@@ -5,3 +5,10 @@ export const toggleCartHiddenOrSHow = () => ({
 })
 
 
+export const addItemToCart = (item) => ({
+    type: cartTypes.CART_ADD_ITEM,
+    payload: {
+        item: item
+    }
+})
+
