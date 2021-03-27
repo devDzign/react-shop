@@ -8,7 +8,9 @@ import {toast} from "react-toastify";
 import {CartIcon} from "../index";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 import {toggleCartHiddenOrSHow} from "../../redux/cart/cart.actions";
-import {selectCartItems, selectCartItemsCount} from "../../redux/cart/cart.selectors";
+import { createStructuredSelector } from "reselect";
+import {selectCartHidden, selectCartItems, selectCartItemsCount} from "../../redux/cart/cart.selectors";
+import {selectIsLoggedIn} from "../../redux/users/user.selectors";
 
 const ROUTES_PATH = [
     {
@@ -32,7 +34,7 @@ const Header = ({isLoggedIn, signOutUser, totalItems, hiddenCart, toggleCart, ca
 
     const renderAuthenticationLink = isLoggedIn
         ?
-        <a  href="#" onClick={logoutHandle} className="nav-link option">
+        <a href="#" onClick={logoutHandle} className="nav-link option">
             Sign Out
         </a>
         :
@@ -53,26 +55,25 @@ const Header = ({isLoggedIn, signOutUser, totalItems, hiddenCart, toggleCart, ca
             <div className="options">
                 {
                     ROUTES_PATH.map((route, key) => {
-                        return <NavLink  exact activeClassName='active' to={route.path} key={key} className='option'>{route.name.toUpperCase()}</NavLink>
+                        return <NavLink exact activeClassName='active' to={route.path} key={key}
+                                        className='option'>{route.name.toUpperCase()}</NavLink>
                     })
                 }
                 {renderAuthenticationLink}
                 <CartIcon totalItems={totalItems} handleClick={handleClickShowCart}/>
             </div>
-            { !hiddenCart && <CartDropdown cartItems={cartItems}/>}
+            {!hiddenCart && <CartDropdown cartItems={cartItems}/>}
 
         </div>
     );
 };
 
-const mapStateToProps = (state) => {
-    return {
-        isLoggedIn: state.authenticate.isLoggedIn,
-        cartItems: selectCartItems(state),
-        totalItems: selectCartItemsCount(state),
-        hiddenCart: state.cart.hidden
-    }
-}
+const mapStateToProps = createStructuredSelector({
+    isLoggedIn: selectIsLoggedIn,
+    cartItems: selectCartItems,
+    totalItems: selectCartItemsCount,
+    hiddenCart: selectCartHidden
+})
 
 const mapDispatchToProps = (dispatch) => {
     return {

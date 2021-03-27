@@ -18,6 +18,7 @@ import {RequireAutehentication} from "./hoc";
 import {Header} from "./components";
 // PAGES
 import {HomePage, ShopPage, SignInAndSignUpPage} from "./pages";
+import {selectIsLoggedIn} from "./redux/users/user.selectors";
 
 /**
  *
@@ -61,7 +62,7 @@ const mapDispatchToProps = dispatch => ( {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.authenticate.isLoggedIn
+        isLoggedIn: selectIsLoggedIn(state)
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

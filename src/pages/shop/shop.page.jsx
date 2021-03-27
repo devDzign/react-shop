@@ -4,6 +4,7 @@ import SHOP_DATA from '../../utils/shop.data.js'
 import CollectionPreview from "../../components/collection-preview/collection-preview.component";
 import {connect} from "react-redux";
 import {addItemToCart} from "../../redux/cart/cart.actions";
+import {selectIsLoggedIn} from "../../redux/users/user.selectors";
 
 const ShopPage = ({addToCart}) => {
     const [shop] = useState(
@@ -34,7 +35,7 @@ const mapDispatchToProps = dispatch => ( {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.authenticate.isLoggedIn
+        isLoggedIn: selectIsLoggedIn(state)
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);

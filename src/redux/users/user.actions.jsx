@@ -1,8 +1,6 @@
 import { UserActionTypes } from "./user.types";
 import SecurityApi from "../../api/security.api";
 import {toast} from "react-toastify";
-import {registrationError} from "../registration/registration.actions";
-
 
 export const setAuthentication = (isLoggedIn, user) => {
     return {
