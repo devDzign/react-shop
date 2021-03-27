@@ -8,6 +8,7 @@ import {toast} from "react-toastify";
 import {CartIcon} from "../index";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 import {toggleCartHiddenOrSHow} from "../../redux/cart/cart.actions";
+import {selectCartItems, selectCartItemsCount} from "../../redux/cart/cart.selectors";
 
 const ROUTES_PATH = [
     {
@@ -64,12 +65,12 @@ const Header = ({isLoggedIn, signOutUser, totalItems, hiddenCart, toggleCart, ca
     );
 };
 
-const mapStateToProps = ({authenticate: {isLoggedIn}, cart: {hidden, cartItems}}) => {
+const mapStateToProps = (state) => {
     return {
-        isLoggedIn,
-        cartItems,
-        totalItems: cartItems.length,
-        hiddenCart: hidden
+        isLoggedIn: state.authenticate.isLoggedIn,
+        cartItems: selectCartItems(state),
+        totalItems: selectCartItemsCount(state),
+        hiddenCart: state.cart.hidden
     }
 }
 

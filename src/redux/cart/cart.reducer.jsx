@@ -1,5 +1,5 @@
 import { cartTypes } from "./cart.types";
-import {addItemToCart} from "../../utils/cart.utils";
+import {addItemToCart} from "./cart.utils";
 
 const INITIAL_STATE = {
     hidden: true,
