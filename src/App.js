@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react';
 // CSS
-import './App.css';
 import 'bootstrap/scss/bootstrap.scss'
-
+import './App.css';
+ // Toastify
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-// redux
+// Redux
 import {connect} from "react-redux";
 // Actions Redux
 import { isAuthenticatedUser } from "./redux/users/user.actions";
@@ -17,7 +16,8 @@ import {RequireAutehentication} from "./hoc";
 //Components
 import {Header} from "./components";
 // PAGES
-import {HomePage, ShopPage, SignInAndSignUpPage} from "./pages";
+import {HomePage, ShopPage, SignInAndSignUpPage, CheckoutPage} from "./pages";
+// SELECTORS
 import {selectIsLoggedIn} from "./redux/users/user.selectors";
 
 /**
@@ -40,6 +40,7 @@ const App = ({isLoggedIn, isAuthenticated}) => {
         <Switch>
             <Route exact path="/" component={HomePage}/>
             <Route exact path="/shop" component={RequireAutehentication(ShopPage)}/>
+            <Route exact path="/checkout" component={CheckoutPage}/>
             <Route
                 exact
                 path="/sign-in-and-sign-up"
