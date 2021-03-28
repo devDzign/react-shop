@@ -1,5 +1,7 @@
 import {createStore, applyMiddleware, compose} from "redux";
 
+import {persistStore} from "redux-persist";
+
 // middlewares
 import logger from 'redux-logger';
 import thunk from "redux-thunk";
@@ -22,4 +24,6 @@ export const store = createStore(
     )
 );
 
+export const persistor = persistStore(store);
 
+export default {store, persistor};
