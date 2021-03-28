@@ -9,11 +9,11 @@ import {
     selectCartTotal
 } from '../../redux/cart/cart.selectors';
 
-import {clearItemFromCart} from "../../redux/cart/cart.actions";
+import {addItemToCart, clearItemFromCart, removeItem} from "../../redux/cart/cart.actions";
 
 
 
-const CheckoutPage = ({ cartItems, total, clearItemFromCart }) => (
+const CheckoutPage = ({ cartItems, total, clearItemFromCart, addItemCart, removeItemCart }) => (
     <div className='checkout-page'>
         <div className='checkout-header'>
             <div className='header-block'>
@@ -33,7 +33,12 @@ const CheckoutPage = ({ cartItems, total, clearItemFromCart }) => (
             </div>
         </div>
         {cartItems.map(cartItem => (
-            <CheckoutItem key={cartItem.id} cartItem={cartItem} removeItem={clearItemFromCart}/>
+            <CheckoutItem key={cartItem.id}
+                          cartItem={cartItem}
+                          clearItem={clearItemFromCart}
+                          removeItem={removeItemCart}
+                          addItem={addItemCart}
+            />
         ))}
         <div className='total'>TOTAL: {total} €</div>
     </div>
@@ -45,7 +50,9 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ( {
-    clearItemFromCart: (item) => dispatch(clearItemFromCart(item))
+    clearItemFromCart: (item) => dispatch(clearItemFromCart(item)),
+    removeItemCart: (item) =>dispatch(removeItem(item)),
+    addItemCart: (item) =>dispatch(addItemToCart(item))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CheckoutPage);
