@@ -1,17 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './shop.styles.scss'
-import SHOP_DATA from '../../utils/shop.data.js'
 import CollectionPreview from "../../components/collection-preview/collection-preview.component";
 import {connect} from "react-redux";
 import {addItemToCart} from "../../redux/cart/cart.actions";
 import {selectIsLoggedIn} from "../../redux/users/user.selectors";
+import {selectShopCollections} from "../../redux/shop/shop.selectors";
+import CollectionsOverview from "../../components/collections-overview/collections-overview.component";
 
-const ShopPage = ({addToCart}) => {
-    const [shop] = useState(
-        {
-            collections: SHOP_DATA
-        }
-    )
+const ShopPage = ({addToCart, collections}) => {
 
     const handleAddItemToCart = (item) => {
         addToCart(item)
@@ -19,12 +15,7 @@ const ShopPage = ({addToCart}) => {
 
     return (
         <div className={'shop-page'}>
-            {
-                shop.collections.map(({items, title, id}) => {
-                    return <CollectionPreview key={id} items={ items } title={title} AddItemToCart={handleAddItemToCart}/>
-                })
-            }
-
+            <CollectionsOverview collections={collections} AddItemToCart={handleAddItemToCart}/>
         </div>
     );
 };
@@ -35,7 +26,9 @@ const mapDispatchToProps = dispatch => ( {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: selectIsLoggedIn(state)
+        isLoggedIn: selectIsLoggedIn(state),
+        collections: selectShopCollections(state)
     }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);
