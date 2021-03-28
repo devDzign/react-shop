@@ -74,11 +74,11 @@ const mapStateToProps = createStructuredSelector({
     totalItems: selectCartItemsCount,
     hiddenCart: selectCartHidden
 })
-
 const mapDispatchToProps = (dispatch) => {
     return {
         signOutUser: (history) => dispatch(userLogout(history)),
         toggleCart: () => dispatch(toggleCartHiddenOrSHow())
     }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -60,10 +60,10 @@ const App = ({isLoggedIn, isAuthenticated}) => {
 const mapDispatchToProps = dispatch => ( {
     isAuthenticated: () => dispatch(isAuthenticatedUser())
 })
-
 const mapStateToProps = state => {
     return {
         isLoggedIn: selectIsLoggedIn(state)
     }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(App);
