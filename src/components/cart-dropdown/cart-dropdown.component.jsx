@@ -3,7 +3,7 @@ import './cart-dropdown.styles.scss'
 import {CartItem, CustomButton} from "../index";
 import {useHistory} from "react-router-dom";
 
-const CartDropdown = ({cartItems}) => {
+const CartDropdown = ({cartItems, handleClick}) => {
     const history = useHistory();
     return (
         <div className='cart-dropdown'>
@@ -19,6 +19,7 @@ const CartDropdown = ({cartItems}) => {
             <CustomButton
                 onClick={() => {
                     history.push('/checkout');
+                    handleClick();
                 }}
             >
                 Checkout

@@ -62,7 +62,7 @@ const Header = ({isLoggedIn, signOutUser, totalItems, hiddenCart, toggleCart, ca
                 {renderAuthenticationLink}
                 <CartIcon totalItems={totalItems} handleClick={handleClickShowCart}/>
             </div>
-            {!hiddenCart && <CartDropdown cartItems={cartItems}/>}
+            {!hiddenCart && <CartDropdown cartItems={cartItems} handleClick={handleClickShowCart}/>}
 
         </div>
     );
