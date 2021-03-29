@@ -39,7 +39,7 @@ const App = ({isLoggedIn, isAuthenticated}) => {
         <ToastContainer position={toast.POSITION.TOP_LEFT} />
         <Switch>
             <Route exact path="/" component={HomePage}/>
-            <Route exact path="/shop" component={RequireAutehentication(ShopPage)}/>
+            <Route path="/shop" component={RequireAutehentication(ShopPage)}/>
             <Route exact path="/checkout" component={CheckoutPage}/>
             <Route
                 exact
