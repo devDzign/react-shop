@@ -10,6 +10,7 @@ import Loading from "./ui/loading/loading.component";
 import CartIcon from "./cart-icon/cart-icon.component";
 import CustomButton from "./ui/form/custom-button/custom-button.componnents";
 import CartItem from "./cart-item/cart-item.component";
+import StripeButton from "./stripe-button/stripe-button.component";
 
 export {
     CartItem,
@@ -23,5 +24,6 @@ export {
     SignInForm,
     SignOut,
     SignUp,
-    Loading
+    Loading,
+    StripeButton
 };
